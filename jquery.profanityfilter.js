@@ -3,18 +3,19 @@
     /// <summary>takes a string and repeats it "n" times.</summary>
     /// <param name="num" type="Number">times to repeat the string</param>
     /// <returns>rep = '*'.repeat(5);    // rep = '*****'</returns>
-    String.prototype.repeat = function (num) {
-        return new Array(num + 1).join(this);
+    var repeat = function (string, num) {
+        return new Array(num + 1).join(string);
     };
 
     /// <summary>Removes duplicates from concatenated strings</summary>
     /// <returns>Array</returns>
-    Array.prototype.unique = function () {
+    
+    var unique = function (array) {
         var a, // array
             i, // incremental counter
             j; // next incremental counter
 
-        a = this.concat();
+        a = array.concat();
         for (i = 0; i < a.length; ++i) {
             for (j = i + 1; j < a.length; ++j) {
                 if (a[i] === a[j]){
@@ -136,7 +137,7 @@
                     badWords = readJsonFromController(options.externalSwears);
                 }
                 if (options.customSwears !== null) {
-                    badWords = badWords.concat(options.customSwears).unique();
+                    badWords = unique(badWords.concat(options.customSwears));
                 }
             } else {
                 if (options.customSwears !== null) {
@@ -158,7 +159,7 @@
                    
                     rep = options.replaceWith[rand];
                     if (typeof options.replaceWith == 'string') {
-                      rep = options.replaceWith[rand].repeat(badWords[i].length);
+                      rep = repeat(options.replaceWith[rand], badWords[i].length);
                     }
                     if (re.test(nodes[x].nodeValue)) {
                         nodes[x].nodeValue = nodes[x].nodeValue.replace(re, rep);
